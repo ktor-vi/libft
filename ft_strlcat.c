@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktorvi <ktorvi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vphilipp <vphilipp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 08:38:54 by ktorvi            #+#    #+#             */
-/*   Updated: 2023/09/19 11:47:08 by ktorvi           ###   ########.fr       */
+/*   Updated: 2023/10/16 14:59:15 by vphilipp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 
-size_t	ft_strlen(char *__restrict str)
+static size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(char *__restrict str)
 	return (i);
 }
 
-size_t	ft_cstrlen(const char *__restrict str)
+static size_t	ft_cstrlen(const char *str)
 {
 	size_t	i;
 
@@ -36,8 +36,7 @@ size_t	ft_cstrlen(const char *__restrict str)
 	return (i);
 }
 
-size_t	ft_strlcat(char *__restrict dst, const char *__restrict src,
-		size_t dstsize)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
 	size_t	j;

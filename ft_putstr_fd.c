@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktorvi <ktorvi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vphilipp <vphilipp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 13:23:42 by ktorvi            #+#    #+#             */
-/*   Updated: 2023/10/05 13:23:43 by ktorvi           ###   ########.fr       */
+/*   Created: 2023/10/16 17:46:50 by vphilipp          #+#    #+#             */
+/*   Updated: 2023/10/16 17:47:01 by vphilipp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <unistd.h>
 
 static size_t	ft_strlen(char *str)
 {
@@ -24,26 +25,14 @@ static size_t	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strrchr(const char *s, int c)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
+	size_t	i;
 
-	i = ft_strlen((char *)s);
-	if (s == NULL)
+	i = 0;
+	while (i < ft_strlen(s))
 	{
-		return (NULL);
+		write(fd, &s[i], 1);
+		i++;
 	}
-	while (i >= 0)
-	{
-		if (s[i] == (char)c)
-		{
-			return ((char *)&s[i]);
-		}
-		i--;
-	}
-	if (c == '\0')
-	{
-		return ((char *)s);
-	}
-	return (NULL);
 }

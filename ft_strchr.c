@@ -12,23 +12,35 @@
 
 #include <stddef.h>
 
-char	*ft_strchr(const char *s, int c)
+static void	*ft_memchr(const void *s, int c, size_t n)
 {
-	if (s == NULL)
+	size_t			i;
+	unsigned char	*temp;
+
+	i = 0;
+	while (i < n)
 	{
-		return (NULL);
-	}
-	while (*s != '\0')
-	{
-		if (*s == (char)c)
-		{
-			return ((char *)s);
-		}
-		s++;
-	}
-	if (c == '\0')
-	{
-		return ((char *)s);
+		temp = (unsigned char *)&s[i];
+		if (*temp == (unsigned char)c)
+			return (temp);
+		i++;
 	}
 	return (NULL);
+}
+
+static size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	return (ft_memchr(s, c, ft_strlen(s) + 1));
 }

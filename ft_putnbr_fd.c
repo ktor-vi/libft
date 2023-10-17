@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_putnr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vphilipp <vphilipp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 10:49:52 by ktorvi            #+#    #+#             */
-/*   Updated: 2023/10/16 15:10:17 by vphilipp         ###   ########.fr       */
+/*   Created: 2023/10/16 17:55:11 by vphilipp          #+#    #+#             */
+/*   Updated: 2023/10/16 17:55:15 by vphilipp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include <unistd.h>
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	ft_putnbr_fd(int n, int fd)
 {
-	size_t	i;
+	char	placeholder;
 
-	i = 0;
-	if (!dst && !src)
-		return (NULL);
-	while (i < n)
+	if (n == -2147483648)
 	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-		i++;
+		write(fd, "-2147483648", 11);
+		return ;
 	}
-	return (dst);
+	else if (n < 0)
+	{
+		write(fd, "-", 1);
+		n = -n;
+	}
+	else if (n == 0)
+	{
+		write(fd, "0", 1);
+		return ;
+	}
+	if (n > 9)
+		ft_putnbr_fd(n / 10, fd);
+	placeholder = (char)(n % 10) + '0';
+	write(fd, &placeholder, 1);
 }

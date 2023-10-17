@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktorvi <ktorvi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vphilipp <vphilipp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 13:23:42 by ktorvi            #+#    #+#             */
-/*   Updated: 2023/10/05 13:23:43 by ktorvi           ###   ########.fr       */
+/*   Created: 2023/10/16 16:41:02 by vphilipp          #+#    #+#             */
+/*   Updated: 2023/10/16 17:23:12 by vphilipp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <stdlib.h>
 
-static size_t	ft_strlen(char *str)
+static size_t	ft_strlen(char const *str)
 {
 	size_t	i;
 
@@ -24,26 +25,20 @@ static size_t	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int	i;
+	char	*mapid;
+	size_t	i;
 
-	i = ft_strlen((char *)s);
-	if (s == NULL)
-	{
+	i = 0;
+	mapid = malloc(ft_strlen(s) + 1);
+	if (mapid == NULL)
 		return (NULL);
-	}
-	while (i >= 0)
+	while (i < ft_strlen(s))
 	{
-		if (s[i] == (char)c)
-		{
-			return ((char *)&s[i]);
-		}
-		i--;
+		mapid[i] = f(i, s[i]);
+		i++;
 	}
-	if (c == '\0')
-	{
-		return ((char *)s);
-	}
-	return (NULL);
+	mapid[i] = '\0';
+	return (mapid);
 }

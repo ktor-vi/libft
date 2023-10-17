@@ -12,7 +12,7 @@
 
 #include <stddef.h> 
 
-size_t	ft_strlen(const char *__restrict str)
+static size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
@@ -24,16 +24,12 @@ size_t	ft_strlen(const char *__restrict str)
 	return (i);
 }
 
-size_t	ft_strlcpy(char *__restrict dst, const char *__restrict src,
+size_t	ft_strlcpy(char *dst, const char *src,
 		size_t dstsize)
 {
 	size_t	i;
 
 	i = 0;
-	if (!src || !dst)
-	{
-		return (0);
-	}
 	if (dstsize == 0)
 	{
 		return (ft_strlen(src));

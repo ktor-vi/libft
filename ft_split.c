@@ -3,108 +3,102 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktorvi <ktorvi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vphilipp <vphilipp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 07:27:20 by ktorvi            #+#    #+#             */
-/*   Updated: 2023/09/19 10:59:57 by ktorvi           ###   ########.fr       */
+/*   Updated: 2023/10/16 14:10:13 by vphilipp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-int	ft_strlen(char *str)
+static int	sep_len(char *s, char c)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
-	{
+	while (s[i] && s[i] != c)
 		i++;
-	}
 	return (i);
 }
 
-int	ft_cc(char c, char *charset)
-{
-	int	i;
-	int	len;
-
-	len = ft_strlen(charset);
-	i = 0;
-	while (i < len)
-	{
-		if (c == charset[i])
-		{
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-char	*ft_str_assign(char *src, char *charset)
+static char	*ft_s_assign(char *src, char c)
 {
 	int		i;
 	int		m_size;
-	char	*str;
+	char	*s;
 
 	i = 0;
-	m_size = 0;
-	while (src[m_size] != '\0' && !ft_cc(src[m_size], charset))
-		m_size++;
-	str = malloc((m_size + 1) * sizeof(char));
-	if (str == NULL)
+	m_size = sep_len(src, c);
+	s = malloc((m_size + 1) * sizeof(char));
+	if (s == NULL)
 		return (NULL);
 	while (i < m_size)
 	{
-		str[i] = src[i];
+		s[i] = src[i];
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	s[i] = '\0';
+	return (s);
 }
 
-int	ft_wc(char *str, char *charset)
+static int	ft_wc(char *s, char c)
 {
 	int	j;
 	int	k;
 
 	j = 0;
 	k = 0;
-	while (str[j] != '\0')
+	while (s[j] != '\0')
 	{
-		while (ft_cc(str[j], charset) && str[j] != '\0')
+		while (s[j] == c && s[j] != '\0')
 			j++;
-		while (!ft_cc(str[j], charset) && str[j] != '\0')
+		if (s[j] != '\0')
+			k++;
+		while (s[j] != c && s[j] != '\0')
 			j++;
-		k++;
 	}
 	return (k);
 }
 
-char	**ft_split(char *str, char *charset)
+char	**ft_split(char *s, char c)
 {
 	char	**splitted;
 	int		j;
 	int		k;
 
-	if (str == NULL || charset == NULL)
+	if (s == NULL)
 		return (NULL);
-	splitted = malloc((ft_wc(str, charset) + 1) * sizeof(char *));
+	splitted = malloc((ft_wc(s, c) + 1) * sizeof(char *));
 	if (splitted == NULL)
 		return (NULL);
 	j = 0;
 	k = 0;
-	while (str[j])
+	while (s[j])
 	{
-		while (ft_cc(str[j], charset) && str[j] != '\0')
+		while (s[j] == c && s[j] != '\0')
 			j++;
-		if (str[j])
-			splitted[k] = ft_str_assign(str + j, charset);
-		while (!ft_cc(str[j], charset) && str[j] != '\0')
+		if (s[j] != '\0')
+			splitted[k++] = ft_s_assign(s + j, c);
+		while (s[j] != c && s[j] != '\0')
 			j++;
-		k++;
 	}
 	splitted[k] = NULL;
 	return (splitted);
 }
+// #include <stdio.h>
+//
+// int	main(int ac, char **av)
+// {
+// 	char	**table;
+// 	int		i;
+//
+// 	(void)ac;
+// 	i = 0;
+// 	table = ft_split(av[1], av[2][0]);
+// 	while (table[i])
+// 	{
+// 		printf("%s\n", table[i]);
+// 		i++;
+// 	}
+// }

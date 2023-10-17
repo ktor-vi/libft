@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktorvi <ktorvi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vphilipp <vphilipp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 13:23:42 by ktorvi            #+#    #+#             */
-/*   Updated: 2023/10/05 13:23:43 by ktorvi           ###   ########.fr       */
+/*   Created: 2023/10/16 17:23:37 by vphilipp          #+#    #+#             */
+/*   Updated: 2023/10/16 17:23:39 by vphilipp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,14 @@ static size_t	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strrchr(const char *s, int c)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	int	i;
+	size_t	i;
 
-	i = ft_strlen((char *)s);
-	if (s == NULL)
+	i = 0;
+	while (i < ft_strlen(s))
 	{
-		return (NULL);
+		f(i, &s[i]);
+		i++;
 	}
-	while (i >= 0)
-	{
-		if (s[i] == (char)c)
-		{
-			return ((char *)&s[i]);
-		}
-		i--;
-	}
-	if (c == '\0')
-	{
-		return ((char *)s);
-	}
-	return (NULL);
 }

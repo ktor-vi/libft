@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktorvi <ktorvi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vphilipp <vphilipp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 13:23:42 by ktorvi            #+#    #+#             */
-/*   Updated: 2023/10/05 13:23:43 by ktorvi           ###   ########.fr       */
+/*   Created: 2023/10/12 13:35:08 by vphilipp          #+#    #+#             */
+/*   Updated: 2023/10/17 10:54:00 by vphilipp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include <stdlib.h>
 
-static size_t	ft_strlen(char *str)
+static int	ft_strlen(const char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -24,26 +24,19 @@ static size_t	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strdup(const char *s1)
 {
-	int	i;
+	char	*dest;
+	int		len;
 
-	i = ft_strlen((char *)s);
-	if (s == NULL)
-	{
+	len = ft_strlen(s1);
+	dest = malloc(len + 1);
+	if (dest == NULL)
 		return (NULL);
-	}
-	while (i >= 0)
+	while (len >= 0)
 	{
-		if (s[i] == (char)c)
-		{
-			return ((char *)&s[i]);
-		}
-		i--;
+		dest[len] = s1[len];
+		len--;
 	}
-	if (c == '\0')
-	{
-		return ((char *)s);
-	}
-	return (NULL);
+	return (dest);
 }
