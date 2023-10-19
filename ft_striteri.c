@@ -6,7 +6,7 @@
 /*   By: vphilipp <vphilipp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:23:37 by vphilipp          #+#    #+#             */
-/*   Updated: 2023/10/16 17:23:39 by vphilipp         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:19:54 by vphilipp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	size_t	i;
 
+	if (s == NULL || f == NULL)
+		return ;
 	i = 0;
 	while (i < ft_strlen(s))
 	{

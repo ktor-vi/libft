@@ -43,6 +43,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*sub;
 	size_t	i;
 
+	if (s == NULL)
+		return (NULL);
 	if (start > (unsigned int)ft_strlen(s) || s[0] == '\0' || s == NULL)
 	{
 		sub = malloc(1);

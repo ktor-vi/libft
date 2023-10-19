@@ -88,6 +88,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	int		k;
 	int		i;
 
+	if (s1 == NULL || set == NULL)
+		return (NULL);
 	i = 0;
 	k = 0;
 	if (s1[0] == '\0')

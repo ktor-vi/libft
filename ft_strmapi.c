@@ -30,6 +30,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char	*mapid;
 	size_t	i;
 
+	if (s == NULL || f == NULL)
+		return (NULL);
 	i = 0;
 	mapid = malloc(ft_strlen(s) + 1);
 	if (mapid == NULL)

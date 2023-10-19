@@ -6,7 +6,7 @@
 /*   By: ktorvi <ktorvi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:49:00 by vphilipp          #+#    #+#             */
-/*   Updated: 2023/10/05 13:57:51 by ktorvi           ###   ########.fr       */
+/*   Updated: 2023/10/19 02:16:54 by ktorvi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,38 @@ static int	ft_c_is_numeric(char c)
 	return (c >= '0' && c <= '9');
 }
 
+static int	handle_overflow(int sign)
+{
+	if (sign == 1)
+		return (-1);
+	else 
+		return (0);
+}
+
 int	ft_atoi(const char *str)
 {
-	int	result;
-	int	i;
-	int	sign;
+	unsigned long long int	result;
+	int						i;
+	int						sign;
 
 	result = 0;
 	i = 0;
 	sign = 1;
 	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
 		i++;
-	if (str[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
 	{
-		sign = -1;
+		if (str[i] == '-')
+			sign = -1;
 		i++;
 	}
-	else if (str[i] == '+')
-		i++;
 	if (!ft_c_is_numeric(str[i]))
 		return (0);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + (str[i] - '0');
-		i++;
+		result = result * 10 + (str[i++] - '0');
+		if (result > 9223372036854775807)
+			return (handle_overflow(sign));
 	}
 	return (result * sign);
 }

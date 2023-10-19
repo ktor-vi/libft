@@ -6,7 +6,7 @@
 /*   By: vphilipp <vphilipp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 07:27:20 by ktorvi            #+#    #+#             */
-/*   Updated: 2023/10/16 14:10:13 by vphilipp         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:27:37 by vphilipp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,25 @@ static int	sep_len(char *s, char c)
 
 	i = 0;
 	while (s[i] && s[i] != c)
+	{
 		i++;
+	}
 	return (i);
 }
 
 static char	*ft_s_assign(char *src, char c)
 {
-	int		i;
 	int		m_size;
 	char	*s;
+	int		i;
 
-	i = 0;
 	m_size = sep_len(src, c);
-	s = malloc((m_size + 1) * sizeof(char));
-	if (s == NULL)
+	s = malloc(m_size + 1);
+	if (!s)
+	{
 		return (NULL);
+	}
+	i = 0;
 	while (i < m_size)
 	{
 		s[i] = src[i];
@@ -42,46 +46,62 @@ static char	*ft_s_assign(char *src, char c)
 	return (s);
 }
 
-static int	ft_wc(char *s, char c)
+static char	**clear_splitted(char **splitted, int k)
 {
-	int	j;
-	int	k;
-
-	j = 0;
-	k = 0;
-	while (s[j] != '\0')
+	while (k >= 0)
 	{
-		while (s[j] == c && s[j] != '\0')
-			j++;
-		if (s[j] != '\0')
-			k++;
-		while (s[j] != c && s[j] != '\0')
-			j++;
+		free(splitted[k]);
+		k--;
 	}
-	return (k);
+	free(splitted);
+	return (NULL);
+}
+
+static int	count_words(char *s, char c)
+{
+	int	word_count;
+	int	j;
+
+	word_count = 0;
+	j = 0;
+	while (s[j])
+	{
+		while (s[j] == c && s[j])
+			j++;
+		if (s[j])
+		{
+			word_count++;
+			while (s[j] != c && s[j])
+				j++;
+		}
+	}
+	return (word_count);
 }
 
 char	**ft_split(char *s, char c)
 {
 	char	**splitted;
-	int		j;
 	int		k;
 
 	if (s == NULL)
 		return (NULL);
-	splitted = malloc((ft_wc(s, c) + 1) * sizeof(char *));
-	if (splitted == NULL)
+	splitted = malloc((count_words(s, c) + 1) * sizeof(char *));
+	if (!splitted)
 		return (NULL);
-	j = 0;
 	k = 0;
-	while (s[j])
+	while (*s)
 	{
-		while (s[j] == c && s[j] != '\0')
-			j++;
-		if (s[j] != '\0')
-			splitted[k++] = ft_s_assign(s + j, c);
-		while (s[j] != c && s[j] != '\0')
-			j++;
+		while (*s == c)
+			s++;
+		if (*s)
+		{
+			splitted[k] = ft_s_assign(s, c);
+			if (splitted[k] == NULL)
+				return (clear_splitted(splitted, k));
+			k++;
+			while (*s && *s != c)
+				s++;
+		}
 	}
 	splitted[k] = NULL;
 	return (splitted);
